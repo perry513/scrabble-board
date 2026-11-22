@@ -6,15 +6,15 @@ const VALUES = {
   N: 1, O: 1, P: 3, Q: 10, R: 1, S: 1, T: 1, U: 1, V: 4, W: 4, X: 8, Y: 4, Z: 10,
 };
 const DICTS = {
-  csw19: {
-    label: 'Collins CSW19 (UK, Australia, international)',
-    url: 'https://raw.githubusercontent.com/scrabblewords/scrabblewords/main/words/British/CSW19.txt',
+  csw21: {
+    label: 'Collins CSW21 (UK, Australia, international)',
+    url: 'https://raw.githubusercontent.com/scrabblewords/scrabblewords/main/words/British/CSW21.txt',
     size: '12.6 MB',
   },
-  nwl2020: {
-    label: 'NWL2020 (USA & Canada)',
-    url: 'https://raw.githubusercontent.com/scrabblewords/scrabblewords/main/words/North-American/NWL2020.txt',
-    size: '6.7 MB',
+  nwl2023: {
+    label: 'NWL2023 (USA & Canada)',
+    url: 'https://raw.githubusercontent.com/scrabblewords/scrabblewords/main/words/North-American/NWL2023.txt',
+    size: '7.6 MB',
   },
   enable: {
     label: 'ENABLE (open word list, no definitions)',
@@ -57,7 +57,7 @@ let pendingLookup = null;
 
 function savedDictId() {
   try { const id = localStorage.getItem(DICT_KEY); if (id && DICTS[id]) return id; } catch (e) { /* ignore */ }
-  return 'csw19';
+  return 'csw21';
 }
 
 async function loadDict(id) {
@@ -84,7 +84,9 @@ async function loadDict(id) {
       const sp = line.indexOf(' ');
       const w = (sp < 0 ? line : line.slice(0, sp)).toUpperCase();
       if (!/^[A-Z]+$/.test(w)) continue;
-      map.set(w, sp < 0 ? '' : line.slice(sp + 1).trim());
+      // NWL marks cross-references as {word=pos} or <word=pos>; show just the word.
+      const def = sp < 0 ? '' : line.slice(sp + 1).trim().replace(/[{<]([^=}>]+)=[^}>]*[}>]/g, '$1');
+      map.set(w, def);
     }
     dict.map = map;
     dict.status = 'ready';

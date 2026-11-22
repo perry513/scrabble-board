@@ -8,7 +8,7 @@ A simple, mobile-friendly page for keeping Scrabble scores and checking words. P
 - Pass / swap, undo last turn, and tap a player to change whose turn it is.
 - End game: type each player's leftover tiles and the app subtracts them (and gives the total to whoever went out).
 - Word lookup: is it allowed, plus a definition.
-- Word lists: Collins CSW19 (UK/Australia/international), NWL2020 (USA/Canada) or ENABLE.
+- Word lists: Collins CSW21 (UK/Australia/international), NWL2023 (USA/Canada) or ENABLE. (CSW24 isn't publicly available as a file; it ships only inside the licensed Collins Zyzzyva app.)
 - Scores are saved in the browser, so a refresh doesn't lose them.
 
 ## Publish on GitHub Pages
@@ -22,5 +22,5 @@ A simple, mobile-friendly page for keeping Scrabble scores and checking words. P
 
 Downloaded from GitHub the first time they are used, then cached by the browser:
 
-- CSW19 and NWL2020 from [scrabblewords/scrabblewords](https://github.com/scrabblewords/scrabblewords). Collins Scrabble Words © HarperCollins.
+- CSW21 and NWL2023 from [scrabblewords/scrabblewords](https://github.com/scrabblewords/scrabblewords). Collins Scrabble Words © HarperCollins.
 - ENABLE from [dolph/dictionary](https://github.com/dolph/dictionary).
