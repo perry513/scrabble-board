@@ -314,6 +314,36 @@ $('#endForm').addEventListener('submit', (e) => {
   render();
 });
 
+/* ---------- Theme ---------- */
+const THEME_KEY = 'scrabble-theme';
+function loadTheme() {
+  try { return Object.assign({ mode: 'auto', accent: 'green' }, JSON.parse(localStorage.getItem(THEME_KEY) || '{}')); } catch (e) { return { mode: 'auto', accent: 'green' }; }
+}
+function applyTheme(t) {
+  const root = document.documentElement;
+  if (t.mode === 'light' || t.mode === 'dark') root.dataset.theme = t.mode; else delete root.dataset.theme;
+  root.dataset.accent = t.accent;
+  // Match the phone's browser bar to the page.
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = getComputedStyle(root).getPropertyValue('--accent').trim() || '#1d5e4f';
+  try { localStorage.setItem(THEME_KEY, JSON.stringify(t)); } catch (e) { /* ignore */ }
+}
+let theme = loadTheme();
+applyTheme(theme);
+const themeDialog = $('#themeDialog');
+$('#btnTheme').addEventListener('click', () => {
+  themeDialog.querySelector(`input[name="mode"][value="${theme.mode}"]`).checked = true;
+  const sw = themeDialog.querySelector(`input[name="accent"][value="${theme.accent}"]`);
+  if (sw) sw.checked = true;
+  themeDialog.showModal();
+});
+themeDialog.addEventListener('change', (e) => {
+  if (e.target.name === 'mode') theme.mode = e.target.value;
+  if (e.target.name === 'accent') theme.accent = e.target.value;
+  applyTheme(theme);
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => applyTheme(theme));
+
 /* ---------- Wiring ---------- */
 $('#scoreForm').addEventListener('submit', (e) => { e.preventDefault(); addScore(); });
 $('#wordInput').addEventListener('input', renderWordCheck);

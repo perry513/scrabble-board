@@ -8,11 +8,20 @@
   <meta name="theme-color" content="#1d5e4f">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23f1d39a'/%3E%3Ctext x='16' y='24' font-size='22' font-family='Georgia,serif' font-weight='700' text-anchor='middle' fill='%23333'%3ES%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Apply the saved theme before the page paints, to avoid a flash.
+    try {
+      var t = JSON.parse(localStorage.getItem('scrabble-theme') || '{}');
+      if (t.mode === 'light' || t.mode === 'dark') document.documentElement.dataset.theme = t.mode;
+      if (t.accent) document.documentElement.dataset.accent = t.accent;
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <header class="top">
     <h1>Scrabble Scorekeeper</h1>
     <div class="top-actions">
+      <button type="button" id="btnTheme" class="icon-btn" aria-label="Change theme" title="Theme">🎨</button>
       <button type="button" id="btnNew">New game</button>
       <button type="button" id="btnEnd">End game</button>
     </div>
@@ -85,6 +94,34 @@
       <div class="row end">
         <button type="submit" value="cancel" formnovalidate>Cancel</button>
         <button type="submit" value="ok" class="primary">Finish game</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="themeDialog">
+    <form method="dialog">
+      <h2>Theme</h2>
+      <fieldset class="theme-group">
+        <legend>Mode</legend>
+        <div class="seg" id="modeSeg">
+          <label><input type="radio" name="mode" value="auto"><span>Auto</span></label>
+          <label><input type="radio" name="mode" value="light"><span>Light</span></label>
+          <label><input type="radio" name="mode" value="dark"><span>Dark</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="theme-group">
+        <legend>Colour</legend>
+        <div class="swatches" id="swatches">
+          <label class="swatch" data-accent="green" title="Green"><input type="radio" name="accent" value="green" aria-label="Green"><span></span></label>
+          <label class="swatch" data-accent="blue" title="Blue"><input type="radio" name="accent" value="blue" aria-label="Blue"><span></span></label>
+          <label class="swatch" data-accent="purple" title="Purple"><input type="radio" name="accent" value="purple" aria-label="Purple"><span></span></label>
+          <label class="swatch" data-accent="red" title="Red"><input type="radio" name="accent" value="red" aria-label="Red"><span></span></label>
+          <label class="swatch" data-accent="wood" title="Wood"><input type="radio" name="accent" value="wood" aria-label="Wood"><span></span></label>
+          <label class="swatch" data-accent="slate" title="Slate"><input type="radio" name="accent" value="slate" aria-label="Slate"><span></span></label>
+        </div>
+      </fieldset>
+      <div class="row end">
+        <button type="submit" class="primary">Done</button>
       </div>
     </form>
   </dialog>
