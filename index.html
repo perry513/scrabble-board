@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Scrabble Scorekeeper</title>
+  <meta name="description" content="Keep Scrabble scores for 2+ players and check whether a word is allowed.">
+  <meta name="theme-color" content="#1d5e4f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23f1d39a'/%3E%3Ctext x='16' y='24' font-size='22' font-family='Georgia,serif' font-weight='700' text-anchor='middle' fill='%23333'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Scrabble Scorekeeper</h1>
+    <div class="top-actions">
+      <button type="button" id="btnNew">New game</button>
+      <button type="button" id="btnEnd">End game</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="players" id="players" aria-label="Players and scores"></section>
+    <div id="banner" class="banner" hidden></div>
+
+    <section class="panel" id="scorePanel">
+      <h2 id="turnLabel">Score</h2>
+      <form id="scoreForm" class="score-form">
+        <label class="field">Points
+          <input id="pointsInput" type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" placeholder="0" aria-label="Points scored">
+        </label>
+        <label class="field">Word
+          <input id="wordInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="optional" aria-label="Word played (optional)">
+        </label>
+        <div id="wordCheck" class="word-check small" aria-live="polite"></div>
+        <div class="row buttons">
+          <button type="submit" class="primary" id="btnAdd">Add score</button>
+          <button type="button" id="btnPass">Pass / swap</button>
+          <button type="button" id="btnUndo">Undo last</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Look up a word</h2>
+      <form id="lookupForm" class="row lookup-row">
+        <input id="lookupInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. QI" aria-label="Word to look up">
+        <button type="submit" class="primary">Check</button>
+      </form>
+      <div id="lookupResult" aria-live="polite"></div>
+      <label class="dict-label">Word list
+        <select id="dictSelect"></select>
+      </label>
+      <p class="muted small" id="dictStatus"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Turns</h2>
+      <ol id="history" class="history"></ol>
+    </section>
+  </main>
+
+  <footer class="foot small muted">
+    Word lists load from GitHub on first use and are cached by your browser.
+    Collins Scrabble Words © HarperCollins. Scrabble® is a trademark of its respective owners; this is an unofficial scorekeeping tool.
+  </footer>
+
+  <dialog id="setupDialog">
+    <form id="setupForm" method="dialog">
+      <h2>New game</h2>
+      <p class="muted small">At least 2 players. The first player listed goes first.</p>
+      <div id="playerInputs" class="player-inputs"></div>
+      <button type="button" id="btnAddPlayer">+ Add player</button>
+      <div class="row end">
+        <button type="submit" value="cancel" id="setupCancel" formnovalidate>Cancel</button>
+        <button type="submit" value="ok" class="primary">Start game</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="endDialog">
+    <form id="endForm" method="dialog">
+      <h2>End game</h2>
+      <p class="muted small">Type each player's leftover tiles (use ? for a blank). Their value is subtracted; a player who went out gets everyone else's total.</p>
+      <div id="endInputs" class="end-inputs"></div>
+      <div class="row end">
+        <button type="submit" value="cancel" formnovalidate>Cancel</button>
+        <button type="submit" value="ok" class="primary">Finish game</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

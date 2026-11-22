@@ -1,0 +1,151 @@
+:root {
+  --bg: #f4f1ea;
+  --surface: #ffffff;
+  --text: #1f2421;
+  --muted: #5f6b66;
+  --line: #d9d3c5;
+  --accent: #1d5e4f;
+  --accent-text: #ffffff;
+  --ok: #1a7f37;
+  --bad: #c0392b;
+  --tile: #f1d39a;
+  --tile-text: #2b2116;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151917; --surface: #1f2522; --text: #e9ece9; --muted: #9aa6a0; --line: #34403a;
+    --accent: #3fa58a; --accent-text: #0d1311; --ok: #4cc06b; --bad: #ff7b6b;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151917; --surface: #1f2522; --text: #e9ece9; --muted: #9aa6a0; --line: #34403a;
+  --accent: #3fa58a; --accent-text: #0d1311; --ok: #4cc06b; --bad: #ff7b6b;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: 0 max(16px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(16px, env(safe-area-inset-left));
+}
+h1, h2 { margin: 0; line-height: 1.2; }
+h1 { font-size: 1.3rem; font-family: Georgia, "Times New Roman", serif; }
+h2 { font-size: 1.05rem; margin-bottom: 10px; }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.ok { color: var(--ok); }
+.bad { color: var(--bad); }
+
+button, input, select { font: inherit; color: inherit; }
+button {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 8px 14px;
+  min-height: 44px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:hover { border-color: var(--muted); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+input[type="text"], input[type="number"], select {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-height: 46px;
+  width: 100%;
+  font-size: 16px; /* prevents iOS zoom on focus */
+}
+input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.top, .layout, .foot { max-width: 560px; margin: 0 auto; }
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 0 12px;
+}
+.top-actions { display: flex; gap: 8px; }
+.top-actions button { white-space: nowrap; }
+.layout { display: flex; flex-direction: column; gap: 12px; }
+
+/* Players */
+.players { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.player {
+  text-align: left;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 14px; min-height: 0;
+  border-radius: 14px; border: 2px solid var(--line); background: var(--surface);
+}
+.player .name { font-size: .95rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.player .lead { color: #d4a017; }
+.player .score { font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.player.current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.player.current .name { color: var(--accent); font-weight: 600; }
+.player.current .name::before { content: "▶ "; }
+
+.banner {
+  background: var(--accent); color: var(--accent-text);
+  border-radius: 12px; padding: 12px 14px; font-weight: 700; font-size: 1.1rem; text-align: center;
+}
+
+/* Panels */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+}
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.row.end { justify-content: flex-end; margin-top: 14px; }
+
+.score-form { display: grid; grid-template-columns: 7rem 1fr; gap: 10px; }
+.field { display: grid; gap: 4px; font-size: .88rem; color: var(--muted); }
+.field input { color: var(--text); }
+#pointsInput { font-size: 1.4rem; font-weight: 700; text-align: center; }
+#wordInput:not(:placeholder-shown), .lookup-row input, .end-inputs input { text-transform: uppercase; letter-spacing: .06em; }
+.word-check { grid-column: 1 / -1; min-height: 1.2em; margin-top: -4px; }
+.buttons { grid-column: 1 / -1; }
+.buttons button { flex: 1 1 auto; }
+.buttons .primary { flex-basis: 100%; }
+
+.lookup-row { flex-wrap: nowrap; }
+#lookupResult { margin-top: 10px; }
+#lookupResult .verdict { font-weight: 700; font-size: 1.1rem; }
+#lookupResult .def { margin: 6px 0 0; }
+#lookupResult .meta { margin: 6px 0 0; }
+.dict-label { display: grid; gap: 4px; margin-top: 14px; font-size: .88rem; color: var(--muted); }
+.dict-label select { color: var(--text); }
+#dictStatus { margin: 6px 0 0; }
+
+.history { list-style: none; margin: 0; padding: 0; display: grid; font-size: .95rem; max-height: 360px; overflow: auto; }
+.history li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.history li:last-child { border-bottom: 0; }
+.history .who { font-weight: 600; }
+.history .w { letter-spacing: .05em; color: var(--muted); }
+.history .pts { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.foot { margin-top: 20px; padding-bottom: 16px; }
+
+/* Dialogs */
+dialog {
+  border: 1px solid var(--line); border-radius: 16px;
+  background: var(--surface); color: var(--text);
+  padding: 18px; width: min(440px, calc(100vw - 32px));
+}
+dialog::backdrop { background: rgba(0,0,0,.45); }
+.player-inputs, .end-inputs { display: grid; gap: 8px; margin: 12px 0; }
+.player-inputs .pi { display: flex; gap: 8px; }
+.player-inputs .pi button { flex: none; }
+.end-inputs .ei { display: grid; grid-template-columns: 1fr 1.3fr auto; gap: 8px; align-items: center; }
+.end-inputs .val { min-width: 3ch; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+
+@media (max-width: 400px) {
+  h1 { font-size: 1.1rem; }
+  .top-actions button { padding: 6px 10px; font-size: .9rem; }
+  .players { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
+  .player .score { font-size: 1.6rem; }
+}
