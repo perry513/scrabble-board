@@ -31,7 +31,7 @@
 }
 
 /* Theme picker */
-.icon-btn { padding: 6px 10px; font-size: 1.1rem; }
+.icon-btn { padding: 6px 10px; }
 .theme-group { border: 0; padding: 0; margin: 14px 0 0; }
 .theme-group legend { font-size: .88rem; color: var(--muted); margin-bottom: 6px; padding: 0; }
 #modeSeg { display: flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
@@ -176,9 +176,13 @@ dialog::backdrop { background: rgba(0,0,0,.45); }
 .end-inputs .ei { display: grid; grid-template-columns: 1fr 1.3fr auto; gap: 8px; align-items: center; }
 .end-inputs .val { min-width: 3ch; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
 
+@media (max-width: 520px) {
+  .top { flex-wrap: wrap; gap: 8px; }
+  .top-actions { width: 100%; }
+  .top-actions button { flex: 1; padding: 6px 8px; font-size: .92rem; min-height: 40px; }
+}
 @media (max-width: 400px) {
-  h1 { font-size: 1.1rem; }
-  .top-actions button { padding: 6px 10px; font-size: .9rem; }
+  h1 { font-size: 1.2rem; }
   .players { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
   .player .score { font-size: 1.6rem; }
 }

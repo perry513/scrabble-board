@@ -317,7 +317,7 @@ $('#endForm').addEventListener('submit', (e) => {
 /* ---------- Theme ---------- */
 const THEME_KEY = 'scrabble-theme';
 function loadTheme() {
-  try { return Object.assign({ mode: 'auto', accent: 'green' }, JSON.parse(localStorage.getItem(THEME_KEY) || '{}')); } catch (e) { return { mode: 'auto', accent: 'green' }; }
+  try { return Object.assign({ mode: 'light', accent: 'green' }, JSON.parse(localStorage.getItem(THEME_KEY) || '{}')); } catch (e) { return { mode: 'light', accent: 'green' }; }
 }
 function applyTheme(t) {
   const root = document.documentElement;

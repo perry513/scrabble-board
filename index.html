@@ -12,7 +12,8 @@
     // Apply the saved theme before the page paints, to avoid a flash.
     try {
       var t = JSON.parse(localStorage.getItem('scrabble-theme') || '{}');
-      if (t.mode === 'light' || t.mode === 'dark') document.documentElement.dataset.theme = t.mode;
+      var mode = t.mode || 'light';
+      if (mode === 'light' || mode === 'dark') document.documentElement.dataset.theme = mode;
       if (t.accent) document.documentElement.dataset.accent = t.accent;
     } catch (e) {}
   </script>
@@ -21,7 +22,7 @@
   <header class="top">
     <h1>Scrabble Scorekeeper</h1>
     <div class="top-actions">
-      <button type="button" id="btnTheme" class="icon-btn" aria-label="Change theme" title="Theme">🎨</button>
+      <button type="button" id="btnTheme" class="icon-btn" title="Change theme">🎨 Theme</button>
       <button type="button" id="btnNew">New game</button>
       <button type="button" id="btnEnd">End game</button>
     </div>
